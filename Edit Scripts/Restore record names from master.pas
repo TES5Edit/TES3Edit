@@ -9,7 +9,9 @@ function Process(e: IInterface): integer;
 var
   m: IInterface;
 begin
-  if not ElementExists(e, 'FULL') and not ElementExists(e, 'DESC') then
+  //There are no records with desc and without name. But records without desc and with name exist.
+  //so we check name only. Desc will be delt if name exist
+  if not ElementExists(e, 'FULL') then
     Exit;
 
   // get master record
@@ -27,6 +29,9 @@ begin
     SetElementEditValues(e, 'FULL', GetElementEditValues(m, 'FULL'));
   if not SameText(GetElementEditValues(e, 'DESC'), GetElementEditValues(m, 'DESC')) then
     SetElementEditValues(e, 'DESC', GetElementEditValues(m, 'DESC'));
+  //We do the same for SHRT name
+  if not SameText(GetElementEditValues(e, 'SHRT'), GetElementEditValues(m, 'SHRT')) then
+    SetElementEditValues(e, 'SHRT', GetElementEditValues(m, 'SHRT'));
 end;
 
 end.
